@@ -174,6 +174,22 @@ class RsqlParseTest {
         assertTrue(actual.getParams().containsValue(size));
     }
 
+    @Test
+    void parseEnumValueOperationTest() {
+        SampleEntity.EnumValue enumValue = SampleEntity.EnumValue.value1;
+        int size = 15;
+        String operation = "enumTest=="+enumValue.name();
+        SampleRsqlParser parser = new SampleRsqlParser();
+        PanacheQueryDescriptor actual = parser.parseRsqlQuery(operation, SampleEntity.class);
+        assertNotNull(actual);
+        assertNotNull(actual.getQuery());
+        assertFalse(actual.getQuery().isBlank());
+        assertNotNull(actual.getParams());
+        assertTrue(actual.getQuery().contains("enumTest = "));
+        assertEquals(1, actual.getParams().size());
+        assertTrue(actual.getParams().containsValue(enumValue.name()));
+    }
+
 }
 
 class SampleRsqlParser extends PanacheRsqlParserBase<SampleEntity> {

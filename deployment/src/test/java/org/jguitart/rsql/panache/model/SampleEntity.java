@@ -11,6 +11,8 @@ public class SampleEntity extends PanacheEntity {
     int size;
     double capacity;
     long timemillis;
+    EnumValue enumTest;
+
 
     public String getName() {
         return name;
@@ -42,5 +44,17 @@ public class SampleEntity extends PanacheEntity {
 
     public void setTimemillis(long timemillis) {
         this.timemillis = timemillis;
+    }
+
+    public EnumValue getEnumTest() {
+        return enumTest;
+    }
+
+    public void setEnumTest(EnumValue enumTest) {
+        this.enumTest = enumTest;
+    }
+
+    public enum EnumValue {
+        value1, value2, value3
     }
 }

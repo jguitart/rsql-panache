@@ -4,6 +4,12 @@ public class ValueParser {
 
     public static Object parseValue(String value, Class type) {
         Object result = null;
+
+        if(type.isEnum()) {
+            result = value;
+            return result;
+        }
+
         if(type.isAssignableFrom(long.class) || type.isAssignableFrom(Long.class)) {
             result = Long.parseLong(value);
         }
@@ -27,6 +33,8 @@ public class ValueParser {
         if(type.isAssignableFrom(String.class)) {
             result = value;
         }
+
+
 
         return result;
     }

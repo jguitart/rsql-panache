@@ -30,10 +30,16 @@
   </repositories>
 
   <distributionManagement>
-    <repository>
+    <!--<repository>
       <id>space-jguitart</id>
       <url>https://maven.pkg.jetbrains.space/mesura/p/rsql-parser/jguitart</url>
-    </repository>
+    </repository>-->
+      <repository>
+        <id>github</id>
+        <name>José Guitart</name>
+        <url>https://maven.pkg.github.com/jguitart/rsql-panache</url>
+      </repository>
+
   </distributionManagement>
 
   <dependencyManagement>
