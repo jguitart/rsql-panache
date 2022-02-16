@@ -5,7 +5,10 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import org.jguitart.rsql.panache.model.SampleEntity;
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -177,7 +180,6 @@ class RsqlParseTest {
     @Test
     void parseEnumValueOperationTest() {
         SampleEntity.EnumValue enumValue = SampleEntity.EnumValue.value1;
-        int size = 15;
         String operation = "enumTest=="+enumValue.name();
         SampleRsqlParser parser = new SampleRsqlParser();
         PanacheQueryDescriptor actual = parser.parseRsqlQuery(operation, SampleEntity.class);
@@ -187,7 +189,43 @@ class RsqlParseTest {
         assertNotNull(actual.getParams());
         assertTrue(actual.getQuery().contains("enumTest = "));
         assertEquals(1, actual.getParams().size());
-        assertTrue(actual.getParams().containsValue(enumValue.name()));
+        assertTrue(actual.getParams().containsValue(enumValue));
+    }
+
+    @Test
+    void parseInstantValueOperationTest() {
+        long instantValue = System.currentTimeMillis();
+        String operation = "instantTest=="+instantValue;
+        SampleRsqlParser parser = new SampleRsqlParser();
+        PanacheQueryDescriptor actual = parser.parseRsqlQuery(operation, SampleEntity.class);
+        assertNotNull(actual);
+        assertNotNull(actual.getQuery());
+        assertFalse(actual.getQuery().isBlank());
+        assertNotNull(actual.getParams());
+        assertTrue(actual.getQuery().contains("instantTest = "));
+        assertEquals(1, actual.getParams().size());
+        Object value = new ArrayList<>(actual.getParams().values()).get(0);
+        assertTrue(value.getClass().isAssignableFrom(Instant.class));
+        Instant actualValue = (Instant) value;
+        assertEquals(instantValue, actualValue.toEpochMilli());
+    }
+
+    @Test
+    void parseDateValueOperationTest() {
+        long dateValue = System.currentTimeMillis();
+        String operation = "dateTest=="+dateValue;
+        SampleRsqlParser parser = new SampleRsqlParser();
+        PanacheQueryDescriptor actual = parser.parseRsqlQuery(operation, SampleEntity.class);
+        assertNotNull(actual);
+        assertNotNull(actual.getQuery());
+        assertFalse(actual.getQuery().isBlank());
+        assertNotNull(actual.getParams());
+        assertTrue(actual.getQuery().contains("dateTest = "));
+        assertEquals(1, actual.getParams().size());
+        Object value = new ArrayList<>(actual.getParams().values()).get(0);
+        assertTrue(value.getClass().isAssignableFrom(Date.class));
+        Date actualValue = (Date) value;
+        assertEquals(dateValue, actualValue.getTime());
     }
 
 }

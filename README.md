@@ -54,7 +54,26 @@ Once this class is implemented then we can use it without any problem.
 
 ```
     String query = "name == apple || name == banana";
-    FruitRsqlParser<Fruit> parser = new FruitRsqlParser("name", true); 
+    String sortColumn = "name";
+    boolean asc = true;
+    FruitRsqlParser<Fruit> parser = new FruitRsqlParser(sortColumn, asc); 
+    PanacheQuery<Fruit> query = parser.parse(query);
+    query.listAll();
+```
+
+
+Date and Instant
+
+Date and Instant fields in entity should be queried as a epoch millis.
+
+Example:
+```
+    // Of course Fruit entity should have a `Date dateCreated` field.
+    java.util.Date desiredDateCreated = new java.util.Date():
+    String q = String.format("dateCreated==%d", desiredDateCreated.getTime());
+    String sortColumn = "name";
+    boolean asc = true;
+    FruitRsqlParser<Fruit> parser = new FruitRsqlParser(sortColumn, asc);
     PanacheQuery<Fruit> query = parser.parse(query);
     query.listAll();
 ```

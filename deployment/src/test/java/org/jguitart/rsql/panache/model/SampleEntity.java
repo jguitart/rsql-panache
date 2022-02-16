@@ -3,6 +3,8 @@ package org.jguitart.rsql.panache.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Entity;
+import java.time.Instant;
+import java.util.Date;
 
 @Entity
 public class SampleEntity extends PanacheEntity {
@@ -12,6 +14,8 @@ public class SampleEntity extends PanacheEntity {
     double capacity;
     long timemillis;
     EnumValue enumTest;
+    Instant instantTest;
+    Date dateTest;
 
 
     public String getName() {
@@ -52,6 +56,22 @@ public class SampleEntity extends PanacheEntity {
 
     public void setEnumTest(EnumValue enumTest) {
         this.enumTest = enumTest;
+    }
+
+    public Instant getInstantTest() {
+        return instantTest;
+    }
+
+    public void setInstantTest(Instant instantTest) {
+        this.instantTest = instantTest;
+    }
+
+    public Date getDateTest() {
+        return dateTest;
+    }
+
+    public void setDateTest(Date dateTest) {
+        this.dateTest = dateTest;
     }
 
     public enum EnumValue {

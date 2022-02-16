@@ -1,17 +1,23 @@
 package org.jguitart.rsql.panache.utils;
 
+import java.time.Instant;
+import java.util.Date;
+
 public class ValueParser {
+
+    private ValueParser() {}
 
     public static Object parseValue(String value, Class type) {
         Object result = null;
 
         if(type.isEnum()) {
-            result = value;
+            result = Enum.valueOf(type, value);
             return result;
         }
 
         if(type.isAssignableFrom(long.class) || type.isAssignableFrom(Long.class)) {
             result = Long.parseLong(value);
+            return result;
         }
 
         if(type.isAssignableFrom(int.class) || type.isAssignableFrom(Integer.class)) {
@@ -34,7 +40,14 @@ public class ValueParser {
             result = value;
         }
 
+        // Date and time classes will work from ecpochMillis
+        if(type.isAssignableFrom(Instant.class)) {
+            result = Instant.ofEpochMilli(Long.parseLong(value));
+        }
 
+        if(type.isAssignableFrom(Date.class )) {
+            result = Date.from(Instant.ofEpochMilli(Long.parseLong(value)));
+        }
 
         return result;
     }
