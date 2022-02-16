@@ -19,9 +19,25 @@ Add in you pom.xml the dependencies:
     </dependency>
 ```
 
+## Install
+
+### Gradle
+```
+    implementation 'org.jguitart:rsql-panache:1.0.2'
+```
+### Maven
+
+```xml
+    <dependency>
+        <groupId>org.jguitart</groupId>
+        <artifactId>rsql-panache</artifactId>
+        <version>1.0.2</version>
+    </dependency>
+```
+
 ## Usage
 
-The main way to use this extension is to ipmlement a RsqlParser.
+The main way to use this extension is to implement a RsqlParser.
 This must extends PanacheRsqlParserBase<T>.
 
 Basic example:
